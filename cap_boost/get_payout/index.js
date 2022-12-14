@@ -12,10 +12,11 @@ $(document).ready(function () {
         var stakeNormal = stake - stakeBoost
         var payoutNormal = stakeNormal * baseOdd
         var payout = payoutBoost + payoutNormal
+        var avgOdd = payout / stake
 
         $("#total_payout").text("Total Payout: €" + payout)
         $("#result_boost").text("Boost stake: €" + stakeBoost + " with odd: " + boostOdd + " has payout: €" + payoutBoost)
         $("#result_base").text("Normal stake: €" + stakeNormal + " with odd: " + baseOdd + " has payout: €" + payoutNormal)
-
+        $("#average_odd").text("Odd for this stake: " + avgOdd)
     });
 });
