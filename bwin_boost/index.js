@@ -2,14 +2,14 @@ $(document).ready(function () {
     $("#calculate_btn").click(function () {
         event.preventDefault();
         if (!$("#form").valid()) return;
-        var odd_to_boost = $("#odd_to_boost").val();
-        var boost_percentage = $("#boost_percentage").val();
+        var odd_to_boost = parseFloat($("#odd_to_boost").val());
+        var boost_percentage = parseFloat($("#boost_percentage").val());
         var odd1 = odd_to_boost + (odd_to_boost * boost_percentage / 100);
-        var max_extra_profit;
+        var max_extra_profit = parseFloat($("#max_extra_profit").val());
         var stake_1 = max_extra_profit / (odd1 - odd_to_boost);
         var payout_1 = stake_1 * odd1;
-        var odd2 = $("#odd2").val();
-        var min_stake = $("#min_stake").val();
+        var odd2 = parseFloat($("#odd_2").val());
+        var min_stake = parseFloat($("#min_stake").val());
         var stake_2 = Math.max(min_stake, payout_1 / odd2);
         var payout_2 = stake_2 * odd2;
 
@@ -31,20 +31,20 @@ $(document).ready(function () {
 
 
 
-        var boost_cap = $("#boost_cap").val();
-        var boostOdd = $("#boosted_odd").val();
-        var baseOdd = $("#base_odd").val();
-        var stake = $("#stake").val();
-        var stakeBoost = Math.min(boost_cap, stake)
-        var payoutBoost = stakeBoost * boostOdd
-        var stakeNormal = stake - stakeBoost
-        var payoutNormal = stakeNormal * baseOdd
-        var payout = payoutBoost + payoutNormal
-        var avgOdd = payout / stake
+        // var boost_cap = $("#boost_cap").val();
+        // var boostOdd = $("#boosted_odd").val();
+        // var baseOdd = $("#base_odd").val();
+        // var stake = $("#stake").val();
+        // var stakeBoost = Math.min(boost_cap, stake)
+        // var payoutBoost = stakeBoost * boostOdd
+        // var stakeNormal = stake - stakeBoost
+        // var payoutNormal = stakeNormal * baseOdd
+        // var payout = payoutBoost + payoutNormal
+        // var avgOdd = payout / stake
 
-        $("#total_payout").text("Total Payout: €" + payout)
-        $("#result_boost").text("Boost stake: €" + stakeBoost + " with odd: " + boostOdd + " has payout: €" + payoutBoost)
-        $("#result_base").text("Normal stake: €" + stakeNormal + " with odd: " + baseOdd + " has payout: €" + payoutNormal)
-        $("#average_odd").text("Odd for this stake: " + avgOdd)
+        // $("#total_payout").text("Total Payout: €" + payout)
+        // $("#result_boost").text("Boost stake: €" + stakeBoost + " with odd: " + boostOdd + " has payout: €" + payoutBoost)
+        // $("#result_base").text("Normal stake: €" + stakeNormal + " with odd: " + baseOdd + " has payout: €" + payoutNormal)
+        // $("#average_odd").text("Odd for this stake: " + avgOdd)
     });
 });
