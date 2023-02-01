@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>arbitrage calc</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<body>
+	<div oninput="calculate()" class="container text-center mt-5">
+		<div id="bets" class="row">
+			<div class="col-1 mt-3 mb-3"></div>
+			<div class="col-4 mt-3 mb-3">odds</div>
+			<div class="col-4 mt-3 mb-3">stake</div>
+			<div class="col-3 mt-3 mb-3">payout</div>
+
+			<div class="col-1 mt-3 mb-3">bet 1</div>
+			<div class="col-4 mt-3 mb-3"><input id="bet1" type="number" min="1"></div>
+			<div onclick="enable(1)" class="col-4 mt-3 mb-3"><input id="stake1" disabled="true" type="number" min="0"></div>
+			<div class="col-3 mt-3 mb-3" id="payout1">-</div>
+
+			<div class="col-1 mt-3 mb-3">bet 2</div>
+			<div class="col-4 mt-3 mb-3"><input id="bet2" type="number" min="1"></div>
+			<div onclick="enable(2)" class="col-4 mt-3 mb-3"><input id="stake2" disabled="true" type="number" min="0"></div>
+			<div class="col-3 mt-3 mb-3" id="payout2">-</div>
+		</div>
+		<div class="row">
+			<div class="col-6">
+				<div id="bets mt-2 mb-2" class="row">
+					<div class="col-4 mt-3 mb-3" >total stake</div>
+					<div onclick="enable(0)" class="col-3 mt-3 mb-3">
+						<input id="totalstake" type="number" min="0">
+					</div>
+		
+				</div>
+				<div class="row mt-2 mb-2">
+					<div class="col-4" onclick="addBet()">
+						<button>more bets</button>
+					</div>
+					<div class="col-4"  onclick="reset()">
+						<button>reset</button>
+					</div>
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="row mt-2 mb-2">
+					<div class="col-4">
+						Total payout: 
+					</div>
+					<div class="col-8" id="totalPayout">
+						-
+					</div>
+					<div class="col-4">
+						Total Profit: 
+					</div>
+					<div class="col-8" id="totalProfit">
+						-
+					</div>	
+					<div class="col-4">
+						ROI: 
+					</div>
+					<div class="col-8" id="ROI">
+						-
+					</div>	
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+	<script>
+		enabledStake = 0;
+		function enable(betnr){
+			if(enabledStake == betnr)
+				return;
+			if(enabledStake == 0)
+				document.getElementById(`totalstake`).disabled = true;
+			else
+				document.getElementById(`stake${enabledStake}`).disabled = true;
+
+			if(betnr == 0)
+				document.getElementById(`totalstake`).disabled = false;
+			else
+				document.getElementById(`stake${betnr}`).disabled = false;
+			
+			enabledStake = betnr;
+		}
+
+		function addBet(){
+			bets = document.getElementById("bets");
+			betnr = bets.childElementCount/4;
+			// get values of odds and stake
+			odds = [];
+			stakes = [];
+			for (i = 1; i < betnr; i++) {
+				odds.push(document.getElementById(`bet${i}`).value);
+				stakes.push(document.getElementById(`stake${i}`).value);
+			}
+			bets.innerHTML += `
+				<div class="col-1 mt-3 mb-3">bet ${betnr}</div>
+				<div class="col-4 mt-3 mb-3"><input id="bet${betnr}" type="number" min="1"></div>
+				<div onclick="enable(${betnr})" class="col-4 mt-3 mb-3"><input id="stake${betnr}" disabled="true" type="number" min="0"></div>
+				<div class="col-3 mt-3 mb-3" id="payout${betnr}">-</div>
+			`;
+			// set values
+			for (i = 1; i < betnr; i++) {
+				document.getElementById(`bet${i}`).value = odds[i-1];
+				document.getElementById(`stake${i}`).value = stakes[i-1];
+			}
+		}
+		function reset(){
+			enable(0);
+			document.getElementById("bets").innerHTML = `
+				<div id="bets" class="row">
+				<div class="col-1 mt-3 mb-3"></div>
+				<div class="col-4 mt-3 mb-3">odds</div>
+				<div class="col-4 mt-3 mb-3">stake</div>
+				<div class="col-3 mt-3 mb-3">payout</div>
+
+				<div class="col-1 mt-3 mb-3">bet 1</div>
+				<div class="col-4 mt-3 mb-3"><input id="bet1" type="number" min="1"></div>
+				<div onclick="enable(1)" class="col-4 mt-3 mb-3"><input id="stake1" disabled="true" type="number" min="0"></div>
+				<div class="col-3 mt-3 mb-3" id="payout1">-</div>
+
+				<div class="col-1 mt-3 mb-3">bet 2</div>
+				<div class="col-4 mt-3 mb-3"><input id="bet2" type="number" min="1"></div>
+				<div onclick="enable(2)" class="col-4 mt-3 mb-3"><input id="stake2" disabled="true" type="number" min="0"></div>
+				<div class="col-3 mt-3 mb-3" id="payout2">-</div>
+			`;
+			document.getElementById("totalstake").value = 0;
+			calculate();
+		}
+
+		function calculate(){
+			odds = [];
+			stakes = [];
+			bets = document.getElementById("bets");
+			betnr = bets.childElementCount/4;
+
+			for (i = 1; i < betnr; i++) {
+				odds.push(document.getElementById(`bet${i}`).value);
+				stakes.push(document.getElementById(`stake${i}`).value);
+			}
+
+			payout = 0;
+			if(enabledStake == 0){
+				totalstake = document.getElementById(`totalstake`).value;
+				// calculate payout with stakes
+				tmp1 = 0;
+				for(i = 0; i < odds.length; i++){
+					tmp2 = 1;
+					for(j = 0; j < odds.length; j++){
+						if(i != j)
+							tmp2 *= odds[j];
+					}
+					tmp1 += tmp2;
+				}
+				tmp2 = totalstake;
+				for(i = 0; i < odds.length; i++){
+					tmp2 *= odds[i];
+				}
+				payout = tmp2/tmp1;
+			}
+			else
+			{
+				// calculate payout with 1 stake
+				stake = document.getElementById(`stake${enabledStake}`).value;
+				odd = document.getElementById(`bet${enabledStake}`).value;
+				payout = stake*odd;
+			}
+			// set payout
+			for(i = 0; i < odds.length; i++){
+					document.getElementById(`payout${i+1}`).innerHTML = payout;
+			}
+			// set stakes
+			for(i = 0; i < odds.length; i++){
+				if(i+1 != enabledStake)
+					document.getElementById(`stake${i+1}`).value = payout/odds[i];
+			}
+			
+			if(enabledStake != 0){
+				totalStake = 0;
+				for(i = 0; i < odds.length; i++){
+					totalStake += payout/odds[i];
+				}
+				document.getElementById(`totalstake`).value = totalStake;
+			}
+			else
+			{
+				totalStake = document.getElementById(`totalstake`).value;
+			}
+			document.getElementById(`totalPayout`).innerHTML = payout;
+			document.getElementById(`totalProfit`).innerHTML = payout - totalStake;
+			document.getElementById(`ROI`).innerHTML = (payout - totalStake)/totalStake*100 + "%";
+		}
+	</script>
+</body>
+</html>
