@@ -4,25 +4,30 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BWin Boosts - Sure Betting Calculator</title>
+    <title>Percentage Boosts - Sure Betting Calculator</title>
     <link rel="stylesheet" href="index.css">
 </head>
 
 <body>
     <h1>Advanced sure betting calculator</h1>
-    <h2>Capped boosts calculator: Get Payout</h2>
+    <h2>Percentage boosts calculator: Get Payout</h2>
     <p>
-        <a href="../">Back to capped boosts calculator</a>
+        <a href="../">Back to home</a>
     </p>
     <form id="form">
+        <label for="odd_boost">Is this boost on the odd? (no = boost on profit)</label>
+        <input type="checkbox" id="odd_boost" name="odd_boost" checked>
+        <br>
+        <br>
+
         <label for="odd_to_boost">Odd 1:</label>
-        <input type="number" id="odd_to_boost" name="odd_to_boost" min="1.01" step="0.01" required>
+        <input type="number" id="odd_to_boost" name="odd_to_boost" min="1.00" step="0.001" required>
 
         <label for="boost_percentage">Boost percentage:</label>
-        <input type="number" id="boost_percentage" name="boost_percentage" min="0" step="0.01" required>
+        <input type="number" id="boost_percentage" name="boost_percentage" min="0" step="0.001" required>
 
         <label for="max_extra_profit">Max extra profit:</label>
-        <input type="number" id="max_extra_profit" name="max_extra_profit" min="0" step="0.01" required>
+        <input type="number" id="max_extra_profit" name="max_extra_profit" min="0" step="0.001" required>
         <br>
         <p id="boosted_odd"></p>
         <p id="stake_1"></p>
@@ -30,9 +35,9 @@
         <br>
         <br>
         <label for="odd_2:">Odd 2:</label>
-        <input type="number" id="odd_2" name="odd_2" min="1.01" step="0.01" required>
+        <input type="number" id="odd_2" name="odd_2" min="1.00" step="0.001" required>
         <label for="min_stake">Min stake:</label>
-        <input type="number" id="min_stake" name="min_stake" min="0" step="0.01" value="0" required>
+        <input type="number" id="min_stake" name="min_stake" min="0" step="0.001" value="0" required>
         <p id="stake_2"></p>
         <p id="payout_2"></p>
         <input type="submit" id="calculate_btn" value="Calculate">
