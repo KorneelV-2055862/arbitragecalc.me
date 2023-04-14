@@ -196,6 +196,12 @@
 			document.getElementById(`totalProfit`).innerHTML = payout - totalStake;
 			document.getElementById(`ROI`).innerHTML = (payout - totalStake)/totalStake*100 + "%";
 		}
+		// remember input
+		link = window.location.href;
+		odd1 = link.split("?")[1].split("+")[0];
+		odd2 = link.split("?")[1].split("+")[1];
+		document.getElementById("bet1").value = odd1;
+		document.getElementById("bet2").value = odd2;
 	</script>
 </body>
 </html>
