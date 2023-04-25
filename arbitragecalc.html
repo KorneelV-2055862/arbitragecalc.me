@@ -130,7 +130,7 @@
 				<div onclick="enable(2)" class="col-4 mt-3 mb-3"><input id="stake2" disabled="true" type="number" min="0"></div>
 				<div class="col-3 mt-3 mb-3" id="payout2">-</div>
 			`;
-			document.getElementById("totalstake").value = 0;
+			document.getElementById("totalstake").value = 1;
 			calculate();
 		}
 
@@ -196,7 +196,7 @@
 			document.getElementById(`totalProfit`).innerHTML = payout - totalStake;
 			document.getElementById(`ROI`).innerHTML = (payout - totalStake)/totalStake*100 + "%";
 		}
-		// remember input
+		// remember input 
 		link = window.location.href;
 		odd1 = link.split("?")[1].split("+")[0];
 		odd2 = link.split("?")[1].split("+")[1];
